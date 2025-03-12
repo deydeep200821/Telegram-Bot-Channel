@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  telegram_bot:
+    build: .
+    container_name: telegram_bot
+    restart: always
+    environment:
+      - API_ID=${API_ID}
+      - API_HASH=${API_HASH}
+      - BOT_TOKEN=${BOT_TOKEN}
+      - HEAD_OWNER_ID=${HEAD_OWNER_ID}
+      - ACTING_HEAD_OWNER_ID=${ACTING_HEAD_OWNER_ID}
+    volumes:
+      - ./logs:/app/logs
+    command: python3 main.py
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
